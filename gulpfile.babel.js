@@ -12,16 +12,16 @@ const paths = {
   styles: {
     src: "assets/scss/styles.scss",
     dest: "src/static/styles",
-    watch: "assets/scss/**/*.scss",
+    watch: "assets/scss/**/*.scss"
   },
   js: {
     src: "assets/js/main.js",
     dest: "src/static/js",
-    watch: "assets/js/**/*.js",
-  },
+    watch: "assets/js/**/*.js"
+  }
 };
 
-const clean = () => del(["/src/static"]);
+const clean = () => del(["src/static"]);
 
 const styles = () =>
   gulp
@@ -30,7 +30,7 @@ const styles = () =>
     .pipe(
       autoprefixer({
         overrideBrowserslist: ["last 2 versions"],
-        cascade: false,
+        cascade: false
       })
     )
     .pipe(minifyCSS())
@@ -43,9 +43,9 @@ const js = () =>
       bro({
         transform: [
           babel.configure({
-            presets: ["@babel/preset-env"],
-          }),
-        ],
+            presets: ["@babel/preset-env"]
+          })
+        ]
       })
     )
     .pipe(gulp.dest(paths.js.dest));
@@ -54,6 +54,7 @@ const watchFiles = () => {
   gulp.watch(paths.styles.watch, styles);
   gulp.watch(paths.js.watch, js);
 };
+
 const dev = gulp.series(clean, styles, js, watchFiles);
 
 export const build = gulp.series(clean, styles, js);

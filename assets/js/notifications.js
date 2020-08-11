@@ -1,10 +1,11 @@
-const notifications = document.getElementById("jsNotifications");
+const body = document.querySelector("body");
 
 const fireNotification = (text, color) =>{
     const notification = document.createElement("div");
     notification.innerHTML = text;
     notification.style.background = color;
-    notifications.appendChild(notification);
+    notification.className = "notification";
+    body.appendChild(notification);
 }
 
 export const hadleNewUser = ({ nickname }) => {
