@@ -31,12 +31,6 @@
     "pug": "^3.0.0",
     "socket.io": "^2.3.0"
   },
-  "browserslist": [
-    "defaults",
-    "not IE 11",
-    "not IE_Mob 11",
-    "maintained node versions"
-  ],
   "scripts": {
     "dev:server": "nodemon --exec babel-node src/server --ignore assets/ --ignore src/static",
     "dev:assets": "gulp"
