@@ -1,5 +1,5 @@
 import events from "./events";
-import { chooseWord } from "../assets/js/word";
+import { chooseWord } from "./word";
 
 let sockets = [];
 let inProgress = false;
@@ -41,7 +41,7 @@ const socketController = (socket, io) => {
 
   const addPoints = (id) => {
     sockets = sockets.map((socket) => {
-      if (socket.id !== id) {
+      if (socket.id === id) {
         socket.points += 10;
       }
       return socket;
@@ -52,7 +52,7 @@ const socketController = (socket, io) => {
 
   socket.on(events.setNickname, ({ nickname }) => {
     socket.nickname = nickname;
-    sockets.push({ id: socket.id, point: 0, nickname: nickname });
+    sockets.push({ id: socket.id, points: 0, nickname: nickname });
     broadcast(events.newUser, { nickname });
     sendPlayerUpdate();
     startGame();
@@ -74,10 +74,10 @@ const socketController = (socket, io) => {
   socket.on(events.sendMsg, ({ message }) => {
     if (message === word) {
       superBroadcast(events.newMsg, {
-        message: `Winner is ${socket.nickname}, word was:${word}`,
+        message: `Winner is ${socket.nickname}, word was: ${word}`,
         nickname: "Bot",
       });
-      addPoints(socket);
+      addPoints(socket.id);
     } else {
       broadcast(events.newMsg, { message, nickname: socket.nickname });
     }
